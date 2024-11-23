@@ -17,7 +17,7 @@ const promises = [
 ];
 
 Promise.all(promises).then((results) => {
-    const table = document.getElementById('myTable');
+    const table = document.getElementById('output');
     table.innerHTML = '';
 
     let totalTime = 0;
