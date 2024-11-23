@@ -25,7 +25,7 @@ Promise.all(promises).then(results => {
     tableBody.innerHTML = '';
 
     // Calculate total time taken
-    const totalTime = results.reduce((acc, result) => acc + result.time, 0);
+    const totalTime = (performance.now() / 1000);
 
     // Populate the table with results
     results.forEach(result => {
