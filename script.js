@@ -1,39 +1,41 @@
 //your JS code here. If required.
-const getRandomDelay = () => Math.floor(Math.random() * 3) + 1;
-
-const createPromise = (id) => {
+// Function to create a promise that resolves after a random time between 1 and 3 seconds
+function createRandomPromise(promiseName) {
+    const timeTaken = Math.random() * 2 + 1; // Random time between 1 and 3 seconds
     return new Promise((resolve) => {
-        const delay = getRandomDelay();
         setTimeout(() => {
-            resolve({ id: id, time: delay });
-        }, delay * 1000);
+            resolve({ name: promiseName, time: timeTaken });
+        }, timeTaken * 1000);
     });
-};
+}
 
+// Create an array of promises
 const promises = [
-    createPromise('Promise 1'),
-    createPromise('Promise 2'),
-    createPromise('Promise 3')
+    createRandomPromise('Promise 1'),
+    createRandomPromise('Promise 2'),
+    createRandomPromise('Promise 3')
 ];
 
-Promise.all(promises).then((results) => {
-    const table = document.getElementById('output');
-    table.innerHTML = '';
+// Get the table body element
+const tableBody = document.getElementById('output');
 
-    let totalTime = 0;
-    results.forEach((result) => {
-        totalTime += result.time;
+// Start processing promises
+Promise.all(promises).then(results => {
+    // Remove loading text
+    tableBody.innerHTML = '';
 
-        const row = table.insertRow();
-        const cell1 = row.insertCell(0);
-        const cell2 = row.insertCell(1);
-        cell1.textContent = result.id;
-        cell2.textContent = result.time;
+    // Calculate total time taken
+    const totalTime = results.reduce((acc, result) => acc + result.time, 0);
+
+    // Populate the table with results
+    results.forEach(result => {
+        const row = document.createElement('tr');
+        row.innerHTML = `<td>${result.name}</td><td>${result.time.toFixed(3)}</td>`;
+        tableBody.appendChild(row);
     });
 
-    const totalRow = table.insertRow();
-    const totalCell1 = totalRow.insertCell(0);
-    const totalCell2 = totalRow.insertCell(1);
-    totalCell1.textContent = 'Total';
-    totalCell2.textContent = totalTime.toFixed(3);
+    // Add total row
+    const totalRow = document.createElement('tr');
+    totalRow.innerHTML = `<td>Total</td><td>${totalTime.toFixed(3)}</td>`;
+    tableBody.appendChild(totalRow);
 });
