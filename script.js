@@ -30,7 +30,7 @@ Promise.all(promises).then(results => {
     // Populate the table with results
     results.forEach(result => {
         const row = document.createElement('tr');
-        row.innerHTML = `<td>${result.name}</td><td>${result.time.toFixed(3)}</td>`;
+        row.innerHTML = `<td>${result.name}</td><td>${result.time.toFixed(0)}</td>`;
         tableBody.appendChild(row);
     });
 
